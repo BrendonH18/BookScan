@@ -7,11 +7,12 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-SAMPLE_RANGE_NAME = "Class Data!A2:E"
+SAMPLE_SPREADSHEET_ID = "1KLO6qfvfxpfUfUE-iEBdVVOaD6GgtzGeAKtKUwsHsr0"
+SAMPLE_RANGE_NAME = "'From Scan'!a1:h1"
+SAMPLE_SHEET_ID = "434979763"
 
 
 def main():
@@ -39,24 +40,39 @@ def main():
 
   try:
     service = build("sheets", "v4", credentials=creds)
+    
+
+    values = [
+      ["test1", "test2", "3", "4", "5", "6", "7", "8"],
+    ]
+    body = {
+      'values': values
+    }
+
+
+
+
 
     # Call the Sheets API
     sheet = service.spreadsheets()
     result = (
         sheet.values()
-        .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
+        .append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME, valueInputOption="USER_ENTERED", body=body)
+        # .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
         .execute()
     )
-    values = result.get("values", [])
+    # values = result.get("values", [])
 
-    if not values:
-      print("No data found.")
-      return
 
-    print("Name, Major:")
-    for row in values:
-      # Print columns A and E, which correspond to indices 0 and 4.
-      print(f"{row[0]}, {row[4]}")
+
+    # if not values:
+    #   print("No data found.")
+    #   return
+
+    # print("Name, Major:")
+    # for row in values:
+    #   # Print columns A and E, which correspond to indices 0 and 4.
+    #   print(f"{row[0]}, {row[1]}")
   except HttpError as err:
     print(err)
 
