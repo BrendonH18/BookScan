@@ -74,8 +74,9 @@ while isCapture == True:
                     openLibrary_process_elements(json.loads(openlibrary_raw.text), output)
 
             with requests1.get("https://www.googleapis.com/books/v1/volumes?q=isbn:" + code_number) as google_raw:
-                if google_raw.status_code == 200:    
-                    google_process_elements(json.loads(google_raw.text)['items'][0]['volumeInfo'], output)
+                if google_raw.status_code == 200:
+                    if not json.loads(google_raw.text)['totalItems'] == 0:
+                        google_process_elements(json.loads(google_raw.text)['items'][0]['volumeInfo'], output)
 
 
             
