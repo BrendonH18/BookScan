@@ -61,6 +61,13 @@ def google_extract_pages(google, output):
 def google_extract_description(google, output):
     output['description'] = google['description']
 def google_extract_language(google, output):
+    language_lib = {
+        'en': "Inglés",
+        'es': "Español"
+    }
+    if google['language'] in language_lib:
+        output['language'] = language_lib[google['language']]
+        return 
     output['language'] = google['language']
 def google_extract_thumbnail(google, output):
     if 'thumbnail' in google['imageLinks']:
