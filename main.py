@@ -136,7 +136,9 @@ while isCapture == True:
         
 
     cv2.imshow('Testing-code-scan', frame)
-    cv2.waitKey(1)
+    if cv2.waitKey(1) == 27:
+        break
+
 
 # while True:
 #     main()
