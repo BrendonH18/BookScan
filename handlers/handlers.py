@@ -30,7 +30,10 @@ def openLibrary_extract_subjects(openLibrary, output):
 def openLibrary_extract_pages(openLibrary, output):
     output['pages'] = openLibrary["number_of_pages"]
 def openLibrary_extract_description(openLibrary, output):
-    output['description'] = openLibrary['description']['value']
+    try:
+        output['description'] = openLibrary['description']['value']
+    except:
+        output['description'] = openLibrary['description']
 def openLibrary_process_elements(openLibrary, output):
     if 'title' in openLibrary and output['title'] == "PENDING":
         openLibrary_extract_title(openLibrary, output)
